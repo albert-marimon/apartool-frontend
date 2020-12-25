@@ -1,0 +1,23 @@
+<h1>{{page_title}}</h1>
+<p>Identifícate en la plataforma</p>
+
+<!-- FORMULARIO DE REGISTRO -->
+<form #loginForm="loginForm" (ngSubmit)="onSubmit(loginForm)">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" class="form-control" #email="ngModel" [(ngModel)]="user.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+        <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block" required>
+            El email no es válido
+        </small>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" #password="ngModel" [(ngModel)]="user.password" required>
+        <small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">
+            El password no es válido
+        </small>
+    </div>
+
+    <input type="submit" value="Entrar" class="btn btn-success" [disabled]="loginForm.invalid" />
+</form>
