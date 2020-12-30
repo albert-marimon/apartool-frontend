@@ -1,0 +1,114 @@
+<h1 *ngIf="action == 'Show'" mat-dialog-title class="dialog-title">Detalles de {{firstname}}</h1>
+<h1 *ngIf="action != 'Show'" mat-dialog-title class="dialog-title">{{action}} Usuario</h1>
+<div mat-dialog-content class="dialog-body">
+  <mat-list *ngIf="action == 'Show'">
+    <div mat-subheader>Datos de contacto</div>
+    <mat-list-item>
+      <mat-icon mat-list-icon>face</mat-icon>
+      <div mat-line>{{firstname}} {{lastname}}</div>
+    </mat-list-item>
+    <mat-list-item>
+        <mat-icon mat-list-icon>phone</mat-icon>
+        <div mat-line> {{phone_number}} </div>
+      </mat-list-item>
+    <mat-divider></mat-divider>
+    <div mat-subheader>Otros</div>
+    <mat-list-item>
+      <mat-icon mat-list-icon>mail</mat-icon>
+      <div mat-line>{{email}}</div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon mat-list-icon>calendar_today</mat-icon>
+      <div mat-line>Creado el {{created_at | date:'dd/MM/yyyy' }} a las {{created_at | date:'HH:mm'}}</div>
+    </mat-list-item>
+  </mat-list>
+  <div *ngIf="action == 'Añadir' || action == 'Actualizar'">
+    <form [formGroup]="form">
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Nombre</mat-label>
+          <input type="text" name="firstname" matInput placeholder="Nombre" formControlName="firstname" [ngClass]="{ 'is-invalid': submitted && f.firstname.errors }">
+          <mat-icon class="icon-in-card" matSuffix>face</mat-icon>
+          <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+            <div *ngIf="f.firstname.errors.required">Obligatorio</div>
+            <div *ngIf="f.firstname.errors.pattern">No puede contener números ni carácteres especiales</div>
+          </div>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Apellidos</mat-label>
+          <input type="text" name="lastname" matInput placeholder="Apellidos" formControlName="lastname" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }">
+          <mat-icon class="icon-in-card" matSuffix>face</mat-icon>
+          <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+              <div *ngIf="f.lastname.errors.required">Obligatorio</div>
+          </div>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Teléfono</mat-label>
+          <input type="tel" name="phone_number" matInput placeholder="Teléfono" formControlName="phone_number" [ngClass]="{ 'is-invalid': submitted && f.phone_number.errors }">
+          <mat-icon class="icon-in-card" matSuffix>phone</mat-icon>
+          <div *ngIf="submitted && f.phone_number.errors" class="invalid-feedback">
+            <div *ngIf="f.phone_number.errors.required">Obligatorio</div>
+        </div>
+        </mat-form-field>
+      </p>
+      <p> 
+        <mat-form-field appearance="legacy">
+          <mat-label>Email</mat-label>
+          <input type="email" name="email" formControlName="email" matInput placeholder="Introduce tu Email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+          <mat-icon class="icon-in-card" matSuffix>email</mat-icon>
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Obligatorio</div>
+            <div *ngIf="f.email.errors.email">Formato incorrecto</div>
+          </div>
+        </mat-form-field>
+      </p>
+      <p *ngIf="action == 'Añadir'">
+        <mat-form-field appearance="legacy">
+          <mat-label>Password</mat-label>
+          <input 
+            type="password"
+            name="password"
+            formControlName="password"
+            matInput
+            placeholder="Introduce el Password"
+            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+          >
+          <mat-icon class="icon-in-card" matSuffix>admin_panel_settings</mat-icon>
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Obligatorio</div>
+          </div>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Selecciona el idioma por defecto</mat-label>
+          <mat-select name="default_lang" matInput formControlName="default_lang" [ngClass]="{ 'is-invalid': submitted && f.default_lang.errors }">
+            <mat-option value="es">
+              Español
+            </mat-option>
+            <mat-option value="ca">
+              Catalán
+            </mat-option>
+            <mat-option value="en">
+              Inglés
+            </mat-option>
+          </mat-select>
+          <div *ngIf="submitted && f.default_lang.errors" class="invalid-feedback">
+            <div *ngIf="f.default_lang.errors.required">Obligatorio</div>
+          </div>
+        </mat-form-field>
+      </p>
+    </form>
+  </div>
+  <p *ngIf="action == 'Eliminar'">
+    ¿ Seguro que deseas eliminar a <b>{{firstname}}</b>?
+  </p>
+</div>
+<mat-dialog-actions>
+    <button class="mat-raised-button"(click)="closeDialog()">Close</button>
+    <button *ngIf="action != 'Show'" class="mat-raised-button mat-primary button-action" (click)="doAction()">{{action}}</button>
+</mat-dialog-actions>

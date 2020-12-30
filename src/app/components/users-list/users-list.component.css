@@ -1,0 +1,59 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.mat-sort-header-button{
+  margin: auto !important;
+}
+
+mat-header-cell {
+  display:flex;
+  justify-content:flex-end;
+ }
+
+::ng-deep .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+  font-weight: bold;
+}
+
+.mat-column-actions{
+  text-align: center;
+  font-weight: bold;
+}
+
+.add-user-div{
+  width: 100%;
+  text-align: right;
+  padding: 5px;
+}
+
+.mat-fab.mat-accent{
+  background-color: #00b9b5 !important;
+}
+
+.mat-tab-group {
+  margin-bottom: 48px;
+}
+
+.content-tab{
+  margin-top:20px;
+}
+
+.item-desactivated-users{
+  text-align: left;
+}
+
+.content-tab-listado-inactivos{
+  width:400px;
+  margin: 20px auto;
+}

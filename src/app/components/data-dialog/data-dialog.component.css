@@ -1,0 +1,12 @@
+.invalid-feedback{
+    color:red;
+    font-size: 11px
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+.button-action{
+    margin-left: 10px;
+}
