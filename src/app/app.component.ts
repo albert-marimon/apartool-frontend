@@ -8,19 +8,16 @@ import { UserService } from './services/user.service';
   providers: [UserService]
 })
 export class AppComponent implements DoCheck {
-	title = 'administrador';
 	public identity: {};
 	public token: string;
+  	public opened: boolean;
 
 	constructor( private _userService: UserService ){
 		this.loadUser();
 	}
 
 	ngDoCheck(){
-    this.loadUser();
-    console.log(this.identity);
-    console.log(this.token);
-
+    	this.loadUser();
 	}
 
 	loadUser(){

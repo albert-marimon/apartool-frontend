@@ -1,3 +1,40 @@
-.example-spacer {
-    flex: 1 1 auto;
-  }
+.spacer {
+  flex: 1 1 auto;
+}
+
+.navbar{
+  background-color:  #1f2833;
+}
+
+.menu-icon{
+  color: #00b9b5;
+}
+
+.container{
+  text-align: center;
+  margin: auto;
+  padding: 2rem 1rem 6rem 1rem;
+}
+
+.title-app-navbar{
+  margin-left: 10px;
+  color: #00b9b5; 
+}
+
+h1{
+  color: #00b9b5;
+}
+
+.footer{
+  background-color: #0b0c10;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+}
+
+.copyright{
+  color: white;
+  font-size: 12px;
+  margin: auto;
+}

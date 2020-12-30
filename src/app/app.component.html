@@ -1,27 +1,38 @@
-<nav> <!-- NAVEGACIÓN -->
-  <mat-toolbar color="primary">
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+<nav>
+  <mat-toolbar class="navbar">
+    <img src="\assets\images\apartlogo.png" width="40px" height="auto">
+    <span class="title-app-navbar">Gestor de Usuarios</span>
+    <span class="spacer"></span>
+    <button mat-icon-button class="menu-icon" [matMenuTriggerFor]="menu">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>My App</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/registro']">
+        <mat-icon>assignment_ind</mat-icon>
+        <span>Registro</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/login']">
+        <mat-icon>login</mat-icon>
+        <span>Login</span>
+      </button>
+      <button [disabled]="!identity" mat-menu-item [routerLink]="['/users/list']">
+        <mat-icon>supervised_user_circle</mat-icon>
+        <span>Listado de Usuarios</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/logout/1']">
+        <mat-icon>sentiment_very_dissatisfied</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
   </mat-toolbar>
-</nav> <!-- CERRAR NAVEGACIÓN -->
+</nav>
 
-<!-- CONTENIDO -->
 <div class="container">
   <router-outlet></router-outlet>
-</div> <!-- CERRAR CONTENEDOR PRINCIPAL -->
+</div>
 
 <footer>
-  <mat-toolbar color="primary">
-    <span>Apartool Users Test &copy;</span>
+  <mat-toolbar class="footer">
+    <span class="copyright">Apartool Users Test &copy;</span>
   </mat-toolbar>
-
 </footer>
