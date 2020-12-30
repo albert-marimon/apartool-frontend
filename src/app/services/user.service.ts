@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 import {User} from '../models/user';
 import {global} from './global';
 
+import { tap,map } from 'rxjs/operators';
+
 @Injectable()
 export class UserService{
 	public url: string;
@@ -14,11 +16,18 @@ export class UserService{
 		this.url = global.url;
 	}
 
+	getUsers():  Observable<any>{
+		let headers = new HttpHeaders()
+			.set('Content-type', 'application/json')
+		return this._http.get(this.url+'user', {headers: headers})
+			.pipe(tap(users => users));
+	}
+
 	register(user): Observable<any>{
 		let params = JSON.stringify(user);
-		let headers = new HttpHeaders().set('Content-Type', 'application/json')
+		let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-		return this._http.post(this.url+'user/', params, {headers: headers});
+		return this._http.post(this.url+'user', params, {headers: headers});
 	}
 
 	signup(user, gettoken = null): Observable<any>{
@@ -28,9 +37,25 @@ export class UserService{
 
 		let params = JSON.stringify(user);
 		let headers = new HttpHeaders().set('Content-Type', 'application/json');
+		
+		return this._http.post(this.url+'login', params, {headers: headers});
+	}
 
-		return this._http.post(this.url+'user/login/', params, {headers: headers});
+	update(user, id, gettoken = null): Observable<any>{
+		if(gettoken != null){
+			user.gettoken = true;
+		}
 
+		let params = JSON.stringify(user);
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+		
+		return this._http.put(this.url+'user/'+id, params, {headers: headers});
+	}
+
+	delete(id): Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+		
+		return this._http.delete(this.url+'user/'+id, {headers: headers});
 	}
 
 	getIdentity(){
@@ -56,4 +81,5 @@ export class UserService{
 
 		return this.token;
 	}
+
 }

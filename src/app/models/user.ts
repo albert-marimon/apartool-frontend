@@ -6,6 +6,6 @@ export class User{
         public password: string,
         public phone_number: string,
         public default_lang: string,
-        public active: boolean
+        public active: number
 	){}
 }
