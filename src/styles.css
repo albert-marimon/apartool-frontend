@@ -1,4 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%; background-color: #1f2833; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+a{ color: #00b9b5;}
+h1{
+    color: #00b9b5;
+    margin:10px 0px;
+}
+p{ color: white;}
+.card-form p{
+    color: rgb(19, 19, 19);
+}
+.icon-in-card{
+    color: #1f2833;
+}
+
+.dialog-title {
+    color: rgb(19, 19, 19);
+}
+.dialog-body p{
+    color: rgb(19, 19, 19);
+    margin: 0px;
+}
