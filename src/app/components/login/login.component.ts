@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
@@ -11,7 +12,7 @@ import { UserService } from '../../services/user.service';
 })
 export class LoginComponent implements OnInit {
      public page_title: string;
-     public user: User;
+	 public user: User;
      public success: boolean;
      public token: string;
      public identity: {};
@@ -19,10 +20,11 @@ export class LoginComponent implements OnInit {
   	constructor(
           private _userService: UserService,
           private _router: Router,
-          private _route: ActivatedRoute
+		  private _route: ActivatedRoute,
+		  private _snackBar: MatSnackBar,
           ) {
   		this.page_title = "Login";
-  		this.user = new User('','','','','','',false);
+		  this.user = new User('','','','','','',1);
   	}
 
   	ngOnInit(){
@@ -33,34 +35,36 @@ export class LoginComponent implements OnInit {
   	onSubmit(form){
   		this._userService.signup(this.user).subscribe(
   			response => {
-  				if(response.success != false){
-     	            	this.success = true;
-     	            	this.token = response.token;
-     	            	this.identity = {
-                      "id": response.id_user,
-                      "firstname": response.firstname,
-                      "lastname": response.lastname, 
-     	            		"email": response.email,
-                      "password": response.password,
-                      "phone_number": response.phone_number,
-                      "default_lang": response.default_lang,
-                      "active": response.active,
-                      "created_at": response.created_at,
-     	            	}     	            	
+  				if(response.status == 'success'){
+     	            this.success = true;
+					this.token = response.token;
+					this.identity = {
+						"id": response.user.id,
+						"firstname": response.user.firstname,
+						"lastname": response.user.lastname, 
+						"email": response.user.email,
+						"password": response.user.password,
+						"phone_number": response.user.phone_number,
+						"default_lang": response.user.default_lang,
+						"active": response.user.active,
+						"created_at": response.user.created_at,
+					}     	            	
                      
-                     //PERSISTIR DATOS USUARIO IDENTIFICADO
-     	            	localStorage.setItem('token', this.token);
-     	            	localStorage.setItem('identity', JSON.stringify(this.identity));
+                    //PERSISTIR DATOS USUARIO IDENTIFICADO
+					localStorage.setItem('token', this.token);
+					localStorage.setItem('identity', JSON.stringify(this.identity));
 
-     	            	//Redirección a INICIO
-       				 this._router.navigate(['/']);
+					this.showToastInfo('Bienvenido '+response.user.firstname, 'X');
+     	            //Redirección a LISTA DE USUARIOS
+					this._router.navigate(['/users/list']);
 	          	} else {
-	            	this.success = false;
+					this.success = false;
+					this.showToastInfo(response.message, 'X');
 	          	}
   			},
   			error => {
   				this.success = false;
-  				console.log(<any>error);
+  				this.showToastInfo('Login incorrecto', 'X');
   			}
   		);
   	}
@@ -70,17 +74,23 @@ export class LoginComponent implements OnInit {
   			let logout = +params['sure']; //El + es para convertir a entero
 
   			if(logout == 1){
+				this.showToastInfo('¡Hasta pronto!', 'X');
   				localStorage.removeItem('identity');
   				localStorage.removeItem('token');
-                    localStorage.removeItem('products');
 
   				this.identity = null;
-          this.token = null;
+          		this.token = null;
           
   				//Redirección a INICIO
   				this._router.navigate(['/']);
   			}
   		})
-  	}
+	}
+	  
+	showToastInfo(message, action){
+		this._snackBar.open(message, action, {
+			duration: 5000,
+		});
+	}
 
 }
