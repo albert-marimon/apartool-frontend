@@ -1,1 +1,79 @@
-<p>register works!</p>
+<h1>{{page_title}}</h1>
+<p>Regístrate en la plataforma de gestión de usuarios de Apartool</p>
+
+<!-- FORMULARIO DE REGISTRO -->
+<mat-card class="card-form">
+    <div class="contenido-card">
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+            <p> Información de usuario </p>
+            <p>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Nombre</mat-label>
+                    <input type="text" name="firstname" #firstname="ngModel" [(ngModel)]="user.firstname"  required matInput placeholder="Nombre" pattern="[a-zA-Z]+">
+                    <mat-icon class="icon-in-card" matSuffix>face</mat-icon>
+                    <mat-error *ngIf="!firstname.valid && firstname.touched">El nombre no es válido</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Apellidos</mat-label>
+                    <input type="text" name="lastname" #lastname="ngModel" [(ngModel)]="user.lastname"  required matInput placeholder="Apellidos" pattern="[a-zA-Z]+">
+                    <mat-icon class="icon-in-card" matSuffix>face</mat-icon>
+                    <mat-error *ngIf="!lastname.valid && lastname.touched">El campo Apellidos no es válido</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Teléfono</mat-label>
+                    <input type="tel" name="phone_number" #phone_number="ngModel" [(ngModel)]="user.phone_number" matInput placeholder="Número de teléfono">
+                    <mat-icon class="icon-in-card" matSuffix>call</mat-icon>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Selecciona el idioma por defecto</mat-label>
+                    <mat-select [(ngModel)]="user.default_lang" name="default_lang" #default_lang="ngModel" required matInput>
+                    <mat-option value="es">
+                        Español
+                    </mat-option>
+                    <mat-option value="ca">
+                        Catalán
+                    </mat-option>
+                    <mat-option value="en">
+                        Inglés
+                    </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="default_lang.touched">El Idioma es obligatorio</mat-error>
+                </mat-form-field>
+            </p>
+            <p> Datos de acceso </p>
+            <p>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Email</mat-label>
+                    <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email"  required matInput placeholder="Introduce tu Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    <mat-icon class="icon-in-card" matSuffix>email</mat-icon>
+                    <mat-error *ngIf="!email.valid && email.touched">El email no es válido</mat-error>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="legacy">
+                    <mat-label>Password</mat-label>
+                    <input 
+                    type="password"
+                    name="password"
+                    #password="ngModel"
+                    [(ngModel)]="user.password"
+                    required
+                    matInput
+                    placeholder="Introduce tu Password">
+                    <mat-icon class="icon-in-card" matSuffix>admin_panel_settings</mat-icon>
+                    <mat-error *ngIf="!password.valid && password.touched">El password no es válido</mat-error>
+                </mat-form-field>
+            </p>
+
+            <div>
+                <button mat-raised-button type="submit" color="primary" [disabled]="registerForm.invalid">Registro</button>
+            </div>
+        </form>
+    </div>
+</mat-card>
